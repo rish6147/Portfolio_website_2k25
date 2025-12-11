@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Projects | Rishabh</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg: #000000;
+            --surface: #0a0a0a;
+            --surface-elevated: #121212;
+            --border: rgba(255, 255, 255, 0.1);
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+            --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Background Animation --- */
+        .bg-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(var(--border) 1px, transparent 1px), 
+                              linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 50px 50px; opacity: 0.3; z-index: -1;
+        }
+
+        /* --- Navbar --- */
+        nav {
+            padding: 20px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border);
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .nav-logo { font-weight: 800; font-size: 1.5rem; letter-spacing: -1px; }
+        .back-btn {
+            text-decoration: none; color: var(--text-muted); font-size: 0.9rem;
+            transition: 0.3s; display: flex; align-items: center; gap: 8px;
+        }
+        .back-btn:hover { color: var(--accent); transform: translateX(-5px); }
+
+        /* --- Header Section --- */
+        .header {
+            text-align: center; padding: 80px 20px 40px 20px;
+        }
+        .header h1 {
+            font-size: 3.5rem; font-weight: 800; margin-bottom: 15px;
+            background: linear-gradient(135deg, #fff 0%, #888 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .header p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+        /* --- Controls (Search & Filter) --- */
+        .controls {
+            max-width: 1200px; margin: 0 auto 50px auto; padding: 0 20px;
+            display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; align-items: center;
+        }
+
+        .filter-tabs { display: flex; gap: 10px; flex-wrap: wrap; }
+        .tab-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+            color: var(--text-muted); padding: 8px 20px; border-radius: 50px;
+            cursor: pointer; transition: 0.3s; font-size: 0.9rem;
+        }
+        .tab-btn:hover, .tab-btn.active {
+            background: var(--accent); color: white; border-color: var(--accent);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .search-box {
+            position: relative; width: 100%; max-width: 300px;
+        }
+        .search-box input {
+            width: 100%; padding: 10px 15px 10px 40px;
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+            border-radius: 8px; color: white; outline: none; transition: 0.3s;
+        }
+        .search-box input:focus { border-color: var(--accent); }
+        .search-icon {
+            position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+            color: var(--text-muted); pointer-events: none;
+        }
+
+        /* --- Projects Grid --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1200px; margin: 0 auto; padding: 0 20px 80px 20px;
+        }
+
+        .project-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 20px; overflow: hidden; transition: all 0.4s ease;
+            display: flex; flex-direction: column; opacity: 0; animation: fadeUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } from { opacity: 0; transform: translateY(20px); } }
+
+        .project-card:hover {
+            transform: translateY(-10px); border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .card-image-box {
+            height: 200px; overflow: hidden; position: relative;
+        }
+        .card-image-box img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .project-card:hover .card-image-box img { transform: scale(1.1); }
+
+        .cat-badge {
+            position: absolute; top: 15px; right: 15px;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(5px);
+            padding: 4px 12px; border-radius: 20px;
+            font-size: 0.7rem; font-weight: 600; color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .card-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; color: #fff; }
+        .card-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; flex-grow: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+        .tech-stack { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 25px; }
+        .tech-span {
+            font-size: 0.75rem; padding: 4px 10px; border-radius: 4px;
+            background: rgba(59, 130, 246, 0.1); color: var(--accent);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .card-links {
+            display: flex; gap: 15px; border-top: 1px solid var(--border);
+            padding-top: 20px;
+        }
+        .link-btn {
+            flex: 1; text-align: center; padding: 10px; border-radius: 8px;
+            font-size: 0.9rem; font-weight: 600; text-decoration: none;
+            transition: 0.3s; cursor: pointer;
+        }
+        .btn-github { background: rgba(255,255,255,0.05); color: #fff; }
+        .btn-github:hover { background: #fff; color: #000; }
+        .btn-demo { border: 1px solid var(--accent); color: var(--accent); }
+        .btn-demo:hover { background: var(--accent); color: #fff; }
+
+        /* --- BOTTOM ACTION DOCK --- */
+        .bottom-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px 20px 80px 20px; /* Extra padding at bottom for FAB */
+            position: relative;
+            z-index: 10;
+        }
+
+        .action-btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-home {
+            background: var(--surface-elevated);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+        .btn-home:hover {
+            border-color: #fff;
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        .btn-top {
+            background: var(--accent);
+            border: 1px solid var(--accent);
+            color: #fff;
+        }
+        .btn-top:hover {
+            box-shadow: 0 0 20px var(--accent-glow);
+            transform: translateY(-3px);
+        }
+
+        /* --- FLOATING CHAT ASSISTANT --- */
+        .chat-widget-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        /* FAB Button */
+        .chat-fab {
+            width: 60px; height: 60px;
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.8rem; color: white;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+            border: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: floatFab 3s ease-in-out infinite;
+        }
+        .chat-fab:hover { transform: scale(1.1); }
+        .chat-fab:active { transform: scale(0.9); }
+
+        @keyframes floatFab {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Chat Popup Window */
+        .chat-popup {
+            width: 350px;
+            height: 500px;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            margin-bottom: 20px;
+            display: flex; flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            
+            /* Hidden State */
+            transform-origin: bottom right;
+            transform: scale(0); opacity: 0;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .chat-popup.active {
+            transform: scale(1); opacity: 1;
+        }
+
+        /* Chat Header */
+        .chat-header {
+            padding: 15px 20px;
+            background: rgba(59, 130, 246, 0.1);
+            border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .chat-header h4 { font-size: 1rem; color: #fff; margin: 0; display: flex; align-items: center; gap: 8px; }
+        .chat-header .status-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; }
+
+        /* Chat Body */
+        .chat-messages {
+            flex: 1; padding: 20px; overflow-y: auto;
+            display: flex; flex-direction: column; gap: 15px;
+        }
+        .chat-messages::-webkit-scrollbar { width: 4px; }
+        .chat-messages::-webkit-scrollbar-thumb { background: #333; }
+
+        .chat-msg {
+            max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; line-height: 1.5;
+        }
+        .chat-msg.bot {
+            align-self: flex-start; background: rgba(255,255,255,0.08); color: #ddd;
+            border-bottom-left-radius: 2px;
+        }
+        .chat-msg.user {
+            align-self: flex-end; background: var(--accent); color: white;
+            border-bottom-right-radius: 2px;
+        }
+
+        /* Chat Input */
+        .chat-input-area {
+            padding: 15px; border-top: 1px solid var(--border);
+            display: flex; gap: 10px; background: rgba(0,0,0,0.3);
+        }
+        .chat-input {
+            flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+            border-radius: 50px; padding: 10px 15px; color: white; outline: none;
+        }
+        .chat-send {
+            background: transparent; border: none; color: var(--accent); cursor: pointer; font-size: 1.2rem;
+        }
+
+        /* --- MODAL STYLES (Keep Existing) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
+            z-index: 2000; display: none; opacity: 0;
+            justify-content: center; align-items: center; padding: 20px;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-content {
+            background: #0f0f0f; width: 100%; max-width: 800px;
+            border: 1px solid var(--border); border-radius: 24px;
+            overflow: hidden; position: relative;
+            transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 50px rgba(59, 130, 246, 0.2);
+            max-height: 90vh; overflow-y: auto;
+        }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        .modal-content::-webkit-scrollbar { width: 6px; }
+        .modal-content::-webkit-scrollbar-thumb { background: #333; }
+        .modal-header-img { width: 100%; height: 300px; object-fit: cover; border-bottom: 1px solid var(--border); }
+        .close-modal-btn {
+            position: absolute; top: 20px; right: 20px;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: rgba(0,0,0,0.6); color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: 0.2s; z-index: 10;
+        }
+        .close-modal-btn:hover { background: var(--accent); border-color: var(--accent); }
+        .modal-body { padding: 40px; }
+        .modal-title { font-size: 2.2rem; font-weight: 700; margin-bottom: 15px; color: #fff; line-height: 1.2; }
+        .modal-desc { color: #ccc; font-size: 1rem; line-height: 1.8; margin-bottom: 30px; }
+        .feature-list { margin-bottom: 30px; }
+        .feature-list h4 { color: var(--accent); margin-bottom: 10px; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+        .feature-list ul { list-style: none; padding: 0; }
+        .feature-list li { margin-bottom: 8px; color: var(--text-muted); padding-left: 20px; position: relative; }
+        .feature-list li::before { content: '▹'; position: absolute; left: 0; color: var(--accent); }
+        .modal-footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border); display: flex; gap: 15px; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.5rem; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .search-box { max-width: 100%; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .modal-body { padding: 25px; }
+            .modal-title { font-size: 1.8rem; }
+            .modal-header-img { height: 200px; }
+            .bottom-actions { flex-direction: column; align-items: center; }
+            .action-btn { width: 100%; justify-content: center; }
+            .chat-popup { width: 300px; height: 450px; right: -20px; bottom: 80px; position: relative; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-grid"></div>
+
+    <nav>
+        <div class="nav-logo">RISH.</div>
+        <a href="../index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </nav>
+
+    <div class="header">
+        <h1>Project Archive</h1>
+        <p>A collection of my research, experiments, and engineering projects.</p>
+    </div>
+
+    <div class="controls">
+        <div class="filter-tabs">
+            <button class="tab-btn active" data-filter="all">All</button>
+            <button class="tab-btn" data-filter="ai">AI / Research</button>
+            <button class="tab-btn" data-filter="web">Web Dev</button>
+            <button class="tab-btn" data-filter="iot">IoT / Hardware</button>
+        </div>
+
+        <div class="search-box">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="searchInput" placeholder="Search projects...">
+        </div>
+    </div>
+
+    <div class="projects-grid" id="projectsGrid">
+        </div>
+
+    <div class="bottom-actions">
+        <a href="../index.html" class="action-btn btn-home">
+            <i class="fas fa-home"></i> Visit Main Site
+        </a>
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'});" class="action-btn btn-top">
+            <i class="fas fa-arrow-up"></i> Go to Top
+        </button>
+    </div>
+
+    <div class="chat-widget-container">
+        
+        <div class="chat-popup" id="chatPopup">
+            <div class="chat-header">
+                <h4><span class="status-dot"></span> AI Assistant</h4>
+                <i class="fas fa-times" onclick="toggleChat()" style="cursor:pointer; color:#999;"></i>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-msg bot">
+                    Hello! Ask me anything about Rishabh's projects. 🤖
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" class="chat-input" placeholder="Ask a question..." onkeypress="handleChatEnter(event)">
+                <button onclick="sendChatMessage()" class="chat-send"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <button class="chat-fab" onclick="toggleChat()">
+            <i class="fas fa-robot"></i>
+        </button>
+    </div>
+
+
+    <div id="projectModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-modal-btn" onclick="closeModal()">&times;</button>
+            
+            <img id="modalImg" src="" alt="Project Image" class="modal-header-img">
+            
+            <div class="modal-body">
+                <h2 id="modalTitle" class="modal-title">Project Title</h2>
+                <div id="modalTech" class="tech-stack"></div>
+                
+                <div class="modal-desc">
+                    <p id="modalDesc">Detailed description goes here.</p>
+                </div>
+
+                <div class="feature-list">
+                    <h4>Key Features</h4>
+                    <ul id="modalFeatures">
+                        </ul>
+                </div>
+
+                <div class="modal-footer">
+                    <a id="modalGithub" href="#" target="_blank" class="link-btn btn-github">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // === PROJECT DATA ===
+        const projectsData = [
+           {
+                id: 1,
+                title: "PACS Based Esophageal Cancer Detection System",
+                category: "ai",
+                image: "../Screenshot 2025-12-09 220256.png",
+                shortDesc: "Deep learning based medical imaging system for esophageal cancer classification and detection.",
+                longDescription: "Cancer prediction models are being developed using CNN model (accuracy: 97%) alongside a web application that integrates seamlessly with a medical image management system. This platform leverages AI-driven analysis and PACS to enable real-time access, storage, and retrieval of medical images.",
+                features: [
+                    "Automated detection and classification of esophageal cancer",
+                    "Integration with PACS for seamless image management",
+                    "Web-based interface for real-time access and analysis",
+                    "High accuracy deep learning model for medical images"
+                ],
+                tech: ["Python", "PyTorch", "TensorFlow", "Flask", "PACS Integration"],
+                github: "https://github.com/rish6147/PACS-BASED-CANCER-DETECTION-SYSTEM"
+            }
+,
+                {
+                    id: 2,
+                    title: "AI-Powered Automatic Drone Surveillance & Alert System",
+                    category: "iot",
+                    image: "../drone.png",
+                    shortDesc: "AI-powered drone system detecting anomalies in real-time using thermal and RGB cameras, GPS, and edge computing.",
+                    longDescription: "This drone system leverages AI models for real-time anomaly detection in outdoor environments. It integrates multi-sensor fusion via ROS, low-latency inference on Nvidia Jetson Nano, and sends instant alerts to a web dashboard for monitoring and analysis.",
+                    features: [
+                        "Real-time anomaly detection using AI models",
+                        "Thermal + RGB camera sensor fusion via ROS",
+                        "GPS-based autonomous navigation and tracking",
+                        "Edge computing on Jetson Nano for low-latency inference",
+                        "Web dashboard alerts for instant monitoring"
+                    ],
+                    tech: ["Python", "ROS", "PyTorch", "OpenCV", "Nvidia Jetson Nano", "Flask", "React"],
+                    github: "https://github.com/yourid/drone-project"
+                },
+
+            {
+                id: 3,
+                title: "Indian Medicinal Plant Identification System",
+                category: "ai",
+                image: "../medi.png",
+                shortDesc: "AI-powered system for identifying Indian medicinal plants from leaf images using deep learning.",
+                longDescription: "This project uses Convolutional Neural Networks (CNNs) to classify and identify Indian medicinal plants based on leaf images. The system assists researchers and herbal practitioners by providing accurate plant identification and relevant details. A web interface enables easy image upload and instant classification results.",
+                features: [
+                    "High-accuracy plant classification using CNN models",
+                    "Extensive dataset of Indian medicinal plant leaves",
+                    "Web interface for real-time identification",
+                    "Data preprocessing and augmentation for robustness"
+                ],
+                tech: ["Python", "TensorFlow", "Keras", "OpenCV", "Flask", "HTML/CSS/JS"],
+                github: "https://github.com/rish6147/Indian-Medicinal-Plant-Identification-System"
+            },
+            {
+                id: 4,
+                title: "Smart Wheelchair",
+                category: "iot",
+                image: "../smartwheel.png",
+                shortDesc: "AI-powered smart wheelchair with gesture control and obstacle avoidance for enhanced mobility and safety.",
+                longDescription: "Developed a smart wheelchair integrating gesture-based control using MPU6050 (accelerometer + gyroscope) and real-time obstacle detection with ultrasonic sensors and Intel RealSense D435 depth camera. The system leverages AI-powered navigation and collision avoidance deployed on NVIDIA Jetson Nano, ensuring seamless control and improved safety for users in dynamic environments.",
+                features: [
+                    "Gesture-based control using MPU6050 sensors",
+                    "Real-time obstacle detection with depth cameras and ultrasonic sensors",
+                    "AI-powered navigation and collision avoidance",
+                    "Bluetooth & serial communication for seamless user control"
+                ],
+                tech: ["C++", "Java", "ESP32", "NVIDIA Jetson Nano", "OpenCV", "PyTorch", "Serial/Bluetooth Communication"],
+                github: "https://github.com/rish6147/smart_wheel_chair"
+            },
+
+            {
+                "id": 5,
+                "title": "Algorithmic-Based OBD-II Trip Data Generator",
+                "category": "web",
+                "image": "../obdprj.png",
+                "shortDesc": "Generates realistic vehicle trip datasets with GPS, OBD-II, and driver biometric data for testing and research.",
+                "longDescription": "The OBD Trip Simulator creates synthetic vehicle telemetry datasets including GPS coordinates, speed, engine RPM, traffic conditions, altitude, and driver health metrics like heart rate and breathing rate. It allows researchers and developers to test AI/ML models, visualize trips, and analyze driver behavior without needing physical OBD-II devices, filling the gap in accessible real-world data.",
+                "features": [
+                    "Simulates GPS, speed, RPM, traffic, altitude, and driver biometrics",
+                    "Multiple trip modes: Random Trip, City-to-City Trip, Manual Coordinates",
+                    "Interactive map visualization using Folium",
+                    "Exports synthetic datasets in CSV format",
+                    "Customizable trip duration, speed, and biometric ranges"
+                ],
+                "tech": ["Python", "Streamlit", "Pandas", "NumPy", "Matplotlib", "Folium", "OSRM API"],
+                "github": "https://github.com/rish6147/OBDTripSimulator"
+            },
+            {
+                "id": 6,
+                "title": "GPS-Based OBD-II Trip Video Generation System",
+                "category": "ai",
+                "image": "../videoviz.jpg",
+                "shortDesc": "Full-stack application that visualizes OBD-II trip data and generates annotated summary videos.",
+                "longDescription": "The OBD-II Vision platform allows users to upload vehicle OBD-II logs and generates visualized summaries of trips. It integrates GPS routes, vehicle parameters (speed, RPM, throttle), and driver biometric data to produce automated videos highlighting driving behaviour, stops, and performance patterns. This system bridges frontend interfaces, backend APIs, Python-based data processing, and database management to provide an interactive and comprehensive view of vehicle trips.",
+                "features": [
+                    "Upload OBD-II CSV/Excel logs for processing",
+                    "Visualizes GPS routes and vehicle parameters on maps",
+                    "Generates annotated summary videos showing driving behaviour",
+                    "Full-stack integration: frontend, backend, Python processing, database",
+                    "Supports driver biometric overlays for enhanced analysis"
+                ],
+                "tech": ["HTML", "CSS", "JavaScript", "Node.js", "MongoDB", "Python", "Flask", "OpenCV", "Google Maps API"],
+                "github": "https://github.com/rish6147/OBD-VISION"
+            },
+            {
+                "id": 7,
+                "title": "KHET-SAT",
+                "category": "ai",
+                "image": "../KHET-SAT.jpg",
+                "shortDesc": "AI-driven IoT system for real-time soil monitoring, automated irrigation, and personalized crop recommendations.",
+                "longDescription": "Developed an integrated AI + IoT solution to assist farmers in managing crop health efficiently. The system uses soil sensors to monitor moisture, temperature, and pH in real time, while machine learning models generate personalized recommendations. Automated irrigation powered by microcontrollers adjusts water flow based on sensor readings, enabling higher crop yield and sustainable water usage.",
+                "features": [
+                    "Real-time soil moisture, pH, and temperature monitoring",
+                    "AI-based crop recommendation and advisory system",
+                    "Automated irrigation using microcontroller and solenoid valves",
+                    "Web dashboard for live farm data visualization",
+                    "IoT-based alert system for critical soil conditions"
+                ],
+                "tech": ["Python", "Flask", "ESP32", "NodeMCU", "DHT11/Capacitive Soil Sensors", "Machine Learning", "HTML/CSS/JavaScript"],
+                "github": "https://github.com/yourid/khet-sat"
+            },
+            {
+                "id": 8,
+                "title": "Question Me",
+                "category": "ai",
+                "image": "../images/questionMe.png",
+                "shortDesc": "Locally hosted Generative AI app using Ollama 3.1 for question–answering and educational assistance.",
+                "longDescription": "Question Me is an offline-first Generative AI application built using Ollama 3.1. It enables fast, private, and reliable question–answering without requiring internet connectivity. Designed for students and low-connectivity regions, the system supports text-based queries, contextual responses, and lightweight model hosting on local devices. The project includes a clean web UI, backend API, and optimized prompt flows.",
+                "features": [
+                    "Locally hosted LLM using Ollama 3.1",
+                    "Offline question–answering with contextual memory",
+                    "Lightweight and optimized for low-end hardware",
+                    "Clean and responsive web interface",
+                    "Backend API for custom model interaction"
+                ],
+                "tech": ["HTML", "CSS", "JavaScript", "Python", "Flask", "Ollama 3.1"],
+                "github": "https://github.com/rish6147/QuestionMe"
+            },
+
+            {
+                "id": 9,
+                "title": "Accident Detection and Rapid Alert System",
+                "category": "iot",
+                "image": "../images/accident.jpg",
+                "shortDesc": "IoT-powered accident detection system using sensors, cameras, and edge AI for instant alerting and emergency response.",
+                "longDescription": "An intelligent accident detection and rapid alert system built using Arduino, ESP32, Raspberry Pi, IMU sensors, GPS, and onboard AI vision modules. The system detects crashes in real time through sensor fusion, identifies accident severity, captures visual evidence from cameras, and instantly sends location-based alerts to emergency contacts or a central monitoring system. Designed for highways, remote areas, and smart city deployments.",
+                "features": [
+                    "Real-time crash detection using IMU + vibration sensors",
+                    "Onboard AI vision for vehicle/accident recognition",
+                    "GPS-based location tracking for emergency alerts",
+                    "ESP32 + Raspberry Pi hardware integration",
+                    "Automatic SMS/WhatsApp/Server alert trigger with timestamp & coordinates"
+                ],
+                "tech": ["C++", "Python", "Arduino", "ESP32", "Raspberry Pi", "OpenCV", "GPS Module", "I2C Sensors"],
+                "github": "https://github.com/yourid/accident-alert-system"
+            },
+
+
+
+
+        ];
+
+        const grid = document.getElementById('projectsGrid');
+        const searchInput = document.getElementById('searchInput');
+        const tabs = document.querySelectorAll('.tab-btn');
+        const modal = document.getElementById('projectModal');
+
+        // --- RENDER FUNCTION ---
+        function createCard(project, index) {
+            return `
+                <div class="project-card" style="animation-delay: ${index * 0.1}s">
+                    <div class="card-image-box">
+                        <span class="cat-badge">${project.category.toUpperCase()}</span>
+                        <img src="${project.image}" alt="${project.title}">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">${project.title}</h3>
+                        <p class="card-desc">${project.shortDesc}</p>
+                        <div class="tech-stack">
+                            ${project.tech.map(t => `<span class="tech-span">${t}</span>`).join('')}
+                        </div>
+                        <div class="card-links">
+                            <a href="${project.github}" target="_blank" class="link-btn btn-github">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <button onclick="openModal(${project.id})" class="link-btn btn-demo">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProjects(filter = 'all', searchQuery = '') {
+            grid.innerHTML = '';
+            const filtered = projectsData.filter(p => {
+                const matchesCategory = filter === 'all' || p.category === filter;
+                const matchesSearch = p.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                      p.tech.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
+                return matchesCategory && matchesSearch;
+            });
+            if(filtered.length === 0) {
+                grid.innerHTML = '<p style="color:#666; width:100%; text-align:center;">No projects found.</p>';
+                return;
+            }
+            filtered.forEach((project, index) => {
+                grid.innerHTML += createCard(project, index);
+            });
+        }
+
+        // --- MODAL LOGIC ---
+        function openModal(id) {
+            const project = projectsData.find(p => p.id === id);
+            if(!project) return;
+            document.getElementById('modalTitle').innerText = project.title;
+            document.getElementById('modalImg').src = project.image;
+            document.getElementById('modalDesc').innerText = project.longDescription;
+            document.getElementById('modalGithub').href = project.github;
+            
+            const techHTML = project.tech.map(t => `<span class="tech-span">${t}</span>`).join('');
+            document.getElementById('modalTech').innerHTML = techHTML;
+
+            const featuresHTML = project.features.map(f => `<li>${f}</li>`).join('');
+            document.getElementById('modalFeatures').innerHTML = featuresHTML;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) closeModal();
+        });
+
+        // --- EVENT LISTENERS ---
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                renderProjects(tab.getAttribute('data-filter'), searchInput.value);
+            });
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            const activeTab = document.querySelector('.tab-btn.active').getAttribute('data-filter');
+            renderProjects(activeTab, e.target.value);
+        });
+
+        // --- CHATBOT LOGIC ---
+        const chatPopup = document.getElementById('chatPopup');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        
+        // Use same prompt as main page
+        const SYSTEM_PROMPT = `You are Rishabh's Portfolio AI Assistant. Answer questions about his projects, skills, and experience concisely.`;
+
+        function toggleChat() {
+            chatPopup.classList.toggle('active');
+        }
+
+        function handleChatEnter(e) {
+            if (e.key === 'Enter') sendChatMessage();
+        }
+
+        function appendChatMessage(sender, text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `chat-msg ${sender}`;
+            msgDiv.textContent = text;
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        async function sendChatMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            appendChatMessage('user', text);
+            chatInput.value = '';
+
+            const loadingId = 'loading-' + Date.now();
+            const loaderDiv = document.createElement('div');
+            loaderDiv.className = 'chat-msg bot';
+            loaderDiv.id = loadingId;
+            loaderDiv.innerText = '...';
+            chatMessages.appendChild(loaderDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                // Free API Call
+                const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(SYSTEM_PROMPT + "\nUser: " + text)}`, { method: 'GET', cache: 'no-cache' });
+                if (!response.ok) throw new Error("API Error");
+                const aiText = await response.text();
+                
+                document.getElementById(loadingId).remove();
+                appendChatMessage('bot', aiText);
+
+            } catch (err) {
+                document.getElementById(loadingId).remove();
+                appendChatMessage('bot', "I'm currently offline. Please check Rishabh's Resume!");
+            }
+        }
+
+        // Initial Render
+        renderProjects();
+
+    </script>
+</body>
+</html>

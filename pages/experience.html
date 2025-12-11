@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience | Rishabh</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg: #050505;
+            --surface: #0f0f0f;
+            --border: rgba(255, 255, 255, 0.08);
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #9ca3af;
+            --font-head: -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-body: 'Segoe UI', Roboto, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Background Noise --- */
+        .noise-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08), transparent 25%),
+                        radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08), transparent 25%);
+            z-index: -1; pointer-events: none;
+        }
+
+        /* --- UPDATED NAVBAR --- */
+        nav {
+            padding: 15px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: rgba(5,5,5,0.8); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-logo { font-weight: 800; font-size: 1.4rem; letter-spacing: -1px; }
+        
+        .nav-right { display: flex; align-items: center; gap: 25px; }
+
+        .back-btn { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; transition: 0.3s; display: flex; align-items: center; gap: 6px; }
+        .back-btn:hover { color: #fff; }
+
+        .nav-resume-btn {
+            padding: 8px 20px; border-radius: 50px;
+            background: rgba(59, 130, 246, 0.1); border: 1px solid var(--accent);
+            color: var(--accent); text-decoration: none; font-size: 0.85rem; font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .nav-resume-btn:hover {
+            background: var(--accent); color: #fff; box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        /* --- Header --- */
+        .header {
+            padding: 140px 20px 80px 20px; text-align: center;
+        }
+        .header h1 {
+            font-family: var(--font-head); font-size: 4rem; font-weight: 800;
+            background: linear-gradient(180deg, #fff, #666); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; margin-bottom: 10px;
+        }
+        .header p { color: var(--text-muted); font-size: 1.1rem; }
+
+        /* --- SPLIT SCROLL LAYOUT --- */
+        .exp-container {
+            max-width: 1100px; margin: 0 auto; padding: 0 20px 100px 20px;
+        }
+
+        /* The Row */
+        .exp-block {
+            display: grid;
+            grid-template-columns: 300px 1fr; /* Fixed Left, Fluid Right */
+            gap: 60px;
+            margin-bottom: 100px;
+            position: relative;
+        }
+
+        /* Left Side (Sticky) */
+        .exp-left {
+            position: sticky; top: 120px;
+            height: fit-content;
+            text-align: right;
+            display: flex; flex-direction: column; align-items: flex-end;
+        }
+
+        .year-huge {
+            font-size: 4rem; font-weight: 800; line-height: 1;
+            color: rgba(255,255,255,0.1);
+            transition: 0.3s;
+        }
+        .exp-block:hover .year-huge { color: var(--accent); }
+
+        .company-logo-wrapper {
+            margin-top: 20px;
+            width: 80px; height: 80px;
+            background: #fff; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; padding: 5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid var(--border);
+        }
+        .company-logo-wrapper img {
+            width: 100%; height: 100%; object-fit: contain;
+        }
+
+        /* Right Side (Card) */
+        .exp-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+        }
+
+        .exp-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+
+        /* Card Content */
+        .role-title { font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 5px; }
+        .company-name { font-size: 1.1rem; color: var(--accent); margin-bottom: 20px; font-weight: 500; }
+        
+        .location-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 0.85rem; color: var(--text-muted);
+            background: rgba(255,255,255,0.05); padding: 5px 12px;
+            border-radius: 20px; margin-bottom: 25px;
+        }
+
+        .desc-list { list-style: none; padding: 0; }
+        .desc-list li {
+            position: relative; padding-left: 25px; margin-bottom: 12px;
+            color: #d4d4d8; font-size: 1rem; line-height: 1.6;
+        }
+        .desc-list li::before {
+            content: ''; position: absolute; left: 0; top: 10px;
+            width: 8px; height: 8px; background: var(--accent);
+            border-radius: 50%; opacity: 0.6;
+        }
+
+        .tech-row {
+            margin-top: 30px; padding-top: 20px;
+            border-top: 1px solid var(--border);
+            display: flex; gap: 10px; flex-wrap: wrap;
+        }
+        .tech-pill {
+            font-size: 0.8rem; padding: 6px 14px;
+            border: 1px solid var(--border); border-radius: 20px;
+            color: var(--text-muted); transition: 0.3s;
+        }
+        .exp-card:hover .tech-pill {
+            border-color: var(--accent); color: #fff; background: rgba(59,130,246,0.1);
+        }
+
+        /* --- Bottom Dock --- */
+        .bottom-dock {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: rgba(15, 15, 15, 0.8); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1); padding: 12px 25px;
+            border-radius: 50px; display: flex; gap: 25px; z-index: 900;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+        .dock-btn {
+            color: #ccc; text-decoration: none; font-size: 0.9rem; font-weight: 600;
+            display: flex; align-items: center; gap: 8px; transition: 0.3s;
+        }
+        .dock-btn:hover { color: #fff; transform: translateY(-2px); }
+
+        /* --- Chat Assistant --- */
+        .chat-widget-container {
+            position: fixed; bottom: 30px; right: 30px; z-index: 1000;
+            display: flex; flex-direction: column; align-items: flex-end;
+        }
+        .chat-fab {
+            width: 60px; height: 60px; background: #fff; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; color: #000; cursor: pointer;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2); border: none;
+            transition: 0.3s;
+        }
+        .chat-fab:hover { transform: scale(1.1); }
+        
+        .chat-popup {
+            width: 320px; height: 450px; background: #0a0a0a; border: 1px solid var(--border);
+            border-radius: 20px; margin-bottom: 15px; display: none; flex-direction: column;
+            overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        }
+        .chat-popup.active { display: flex; animation: slideUp 0.3s ease; }
+        
+        .chat-header { padding: 15px; background: #111; border-bottom: 1px solid var(--border); color: #fff; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+        .chat-body { flex: 1; padding: 15px; overflow-y: auto; color: #ccc; font-size: 0.9rem; }
+        .chat-input-box { padding: 15px; border-top: 1px solid var(--border); display: flex; gap: 10px; }
+        .c-input { flex: 1; background: #222; border: 1px solid #333; padding: 8px; color: #fff; border-radius: 4px; outline: none; }
+        .c-send { background: var(--accent); border: none; color: #fff; padding: 0 15px; border-radius: 4px; cursor: pointer; }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 900px) {
+            .header h1 { font-size: 2.8rem; }
+            
+            nav { padding: 15px 20px; }
+            .nav-right { gap: 15px; }
+            .nav-resume-btn { padding: 6px 15px; font-size: 0.8rem; }
+
+            .exp-block {
+                grid-template-columns: 1fr; /* Stack vertically */
+                gap: 20px; margin-bottom: 60px;
+            }
+
+            .exp-left {
+                position: relative; top: 0;
+                flex-direction: row; align-items: center; justify-content: space-between;
+                width: 100%; border-bottom: 1px solid var(--border);
+                padding-bottom: 20px;
+            }
+
+            .year-huge { font-size: 2.5rem; }
+            .company-logo-wrapper { width: 50px; height: 50px; margin-top: 0; }
+
+            .exp-card { padding: 25px; }
+            .role-title { font-size: 1.5rem; }
+
+            /* Mobile Dock */
+            .bottom-dock {
+                width: 90%; justify-content: center;
+            }
+            .chat-widget-container { bottom: 90px; right: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="noise-bg"></div>
+
+    <nav>
+        <div class="nav-logo">RISH.</div>
+        <div class="nav-right">
+            <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Home</a>
+            <a href="resume.pdf" target="_blank" class="nav-resume-btn">Resume</a>
+        </div>
+    </nav>
+
+    <div class="header">
+        <h1>Experience</h1>
+        <p>A deep dive into my professional career, internships, and research roles.</p>
+    </div>
+
+    <div class="exp-container">
+
+        <div class="exp-block">
+            <div class="exp-left">
+                <div class="year-huge">2025</div>
+                <div class="company-logo-wrapper">
+                    <img src="https://tse2.mm.bing.net/th/id/OIP.C-AUxOVl-IpDHX8ieVWI3AAAAA?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="STUST">
+                </div>
+            </div>
+            <div class="exp-card">
+                <h3 class="role-title">AI Research Intern</h3>
+                <h4 class="company-name">Southern Taiwan University of Science & Tech</h4>
+                
+                <div class="location-badge">
+                    <i class="fas fa-map-marker-alt"></i> Tainan, Taiwan • Aug 2025 - Nov 2025
+                </div>
+
+                <ul class="desc-list">
+                    <li>Spearheaded research on generating realistic automotive trip data simulations using Python.</li>
+                    <li>Developed visualization tools for driver behavior analysis using Folium and Pandas.</li>
+                    <li>Optimized machine learning algorithms for deployment on resource-constrained edge devices.</li>
+                </ul>
+
+                <div class="tech-row">
+                    <span class="tech-pill">Python</span>
+                    <span class="tech-pill">Data Visualization</span>
+                    <span class="tech-pill">Simulation</span>
+                    <span class="tech-pill">Research</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="exp-block">
+            <div class="exp-left">
+                <div class="year-huge">2024</div>
+                <div class="company-logo-wrapper">
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.lJhDZkEWtwrd-26D_HKXlwHaHA?cb=ucfimg2&ucfimg=1&w=728&h=689&rs=1&pid=ImgDetMain&o=7&rm=3" alt="CCU">
+                </div>
+            </div>
+            <div class="exp-card">
+                <h3 class="role-title">AI Research Intern</h3>
+                <h4 class="company-name">National Chung Cheng University (CCU)</h4>
+                
+                <div class="location-badge">
+                    <i class="fas fa-map-marker-alt"></i> Chiayi, Taiwan • Sept 2024 - Nov 2024
+                </div>
+
+                <ul class="desc-list">
+                    <li>Engineered a PACS-integrated web platform for real-time Esophageal Cancer detection.</li>
+                    <li>Implemented custom CNN and ResNet architectures achieving 97% classification accuracy.</li>
+                    <li>Collaborated with medical professionals to ensure clinical applicability.</li>
+                </ul>
+
+                <div class="tech-row">
+                    <span class="tech-pill">Deep Learning</span>
+                    <span class="tech-pill">Medical Imaging</span>
+                    <span class="tech-pill">PACS</span>
+                    <span class="tech-pill">CNN</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="exp-block">
+            <div class="exp-left">
+                <div class="year-huge">2024</div>
+                <div class="company-logo-wrapper">
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.YZ83koQgmS0Bgnn_CI_r4wAAAA?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="ISI">
+                </div>
+            </div>
+            <div class="exp-card">
+                <h3 class="role-title">Data Science Intern</h3>
+                <h4 class="company-name">Indian Statistical Institute (ISI)</h4>
+                
+                <div class="location-badge">
+                    <i class="fas fa-map-marker-alt"></i> Kolkata, India • Jul 2024 - Oct 2024
+                </div>
+
+                <ul class="desc-list">
+                    <li>Built a locally hosted Generative AI application using Ollama 3.1 LLM.</li>
+                    <li>Enabled access to AI tools in low-internet connectivity regions for education.</li>
+                    <li>Reduced model latency by 40% through quantization techniques.</li>
+                </ul>
+
+                <div class="tech-row">
+                    <span class="tech-pill">GenAI</span>
+                    <span class="tech-pill">LLMs</span>
+                    <span class="tech-pill">Ollama</span>
+                    <span class="tech-pill">Python</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="exp-block">
+            <div class="exp-left">
+                <div class="year-huge">2023</div>
+                <div class="company-logo-wrapper">
+                    <img src="https://media.licdn.com/dms/image/v2/D4D0BAQGUFvzD4KK3OA/company-logo_200_200/company-logo_200_200/0/1687273281045?e=2147483647&v=beta&t=2rWH4qAs1kUt4wle1zFQvL10e-DtEcIbu6bFhVDCUWc" alt="IASYNT">
+                </div>
+            </div>
+            <div class="exp-card">
+                <h3 class="role-title">Web Developer Intern</h3>
+                <h4 class="company-name">IASYNT Global Pvt. Ltd.</h4>
+                
+                <div class="location-badge">
+                    <i class="fas fa-map-marker-alt"></i> Remote • Aug 2023 - Mar 2024
+                </div>
+
+                <ul class="desc-list">
+                    <li>Developed full-stack web apps using React.js and Node.js.</li>
+                    <li>Integrated IoT real-time data using WebSockets for live monitoring.</li>
+                    <li>Implemented CI/CD pipelines for automated testing and deployment.</li>
+                </ul>
+
+                <div class="tech-row">
+                    <span class="tech-pill">React</span>
+                    <span class="tech-pill">Node.js</span>
+                    <span class="tech-pill">IoT</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bottom-dock">
+        <a href="../index.html" class="dock-btn"><i class="fas fa-home"></i> Main Site</a>
+        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="dock-btn"><i class="fas fa-arrow-up"></i> Top</a>
+    </div>
+
+    <div class="chat-widget-container">
+        <div class="chat-popup" id="chatPopup">
+            <div class="chat-header">
+                <span>AI Assistant</span>
+                <i class="fas fa-times" onclick="toggleChat()" style="cursor:pointer;"></i>
+            </div>
+            <div class="chat-body" id="chatMessages">
+                <div style="background:rgba(255,255,255,0.1); padding:8px; border-radius:4px; margin-bottom:10px;">
+                    Hello! Ask me about Rishabh's experience.
+                </div>
+            </div>
+            <div class="chat-input-box">
+                <input type="text" id="chatInput" class="c-input" placeholder="Ask something..." onkeypress="handleChatKey(event)">
+                <button onclick="sendMessage()" class="c-send"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <button class="chat-fab" onclick="toggleChat()">
+            <i class="fas fa-robot"></i>
+        </button>
+    </div>
+
+    <script>
+        // --- CHAT LOGIC ---
+        const chatPopup = document.getElementById('chatPopup');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+
+        const SYSTEM_PROMPT = "You are Rishabh's AI Assistant. Answer questions about his work experience professionally.";
+
+        function toggleChat() {
+            chatPopup.classList.toggle('active');
+        }
+
+        function handleChatKey(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+
+        async function sendMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+            
+            const userDiv = document.createElement('div');
+            userDiv.style.cssText = "background:var(--accent); padding:8px; border-radius:4px; margin-bottom:10px; align-self:flex-end; color:white; max-width:80%; margin-left:auto;";
+            userDiv.innerText = text;
+            chatMessages.appendChild(userDiv);
+            chatInput.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            const loadDiv = document.createElement('div');
+            loadDiv.innerText = "...";
+            loadDiv.style.color = "#888";
+            loadDiv.id = "loading";
+            chatMessages.appendChild(loadDiv);
+
+            try {
+                const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(SYSTEM_PROMPT + " User: " + text)}`);
+                const reply = await response.text();
+                document.getElementById('loading').remove();
+                const botDiv = document.createElement('div');
+                botDiv.style.cssText = "background:rgba(255,255,255,0.1); padding:8px; border-radius:4px; margin-bottom:10px; color:#ddd; max-width:80%;";
+                botDiv.innerText = reply;
+                chatMessages.appendChild(botDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            } catch (err) {
+                document.getElementById('loading').remove();
+            }
+        }
+    </script>
+
+</body>
+</html>
