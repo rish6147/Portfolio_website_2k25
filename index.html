@@ -500,6 +500,41 @@
         .research-badge { font-size: 0.75rem; padding: 6px 14px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 20px; color: var(--accent); font-weight: 500; }
         .research-desc { color: var(--text-muted); line-height: 1.7; margin-bottom: 24px; }
         .research-link { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font-weight: 600; }
+        /* ORCID Button Style */
+    .btn-orcid {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 28px;
+    background: transparent;
+    border: 1px solid #A6CE39; /* Official Color */
+    color: #A6CE39;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 25px;
+    width: fit-content; /* Content ke hisaab se width lega */
+}
+
+/* Hover Effect */
+.btn-orcid:hover {
+    background: #A6CE39;
+    color: #000;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(166, 206, 57, 0.3);
+}
+
+/* Mobile Responsive Tweak: Button ko center karne ke liye */
+@media (max-width: 900px) {
+    .btn-orcid {
+        margin-left: auto;
+        margin-right: auto;
+        display: inline-flex; /* Flex maintain karega */
+    }
+}
 
         /* Hobby / Photography */
         .hobby-section { padding: 120px 0; background: #050505; position: relative; overflow: hidden; }
@@ -953,6 +988,10 @@
                     <span class="tag" style="margin-bottom: 24px;">RESEARCH WORK</span>
                     <h2>Research<br>Work</h2>
                     <p>Scroll down to explore my Recent Research Work.</p>
+
+                    <a href="https://orcid.org/0009-0007-3663-5525" target="_blank" class="btn-orcid">
+                        <i class="fab fa-orcid"></i> Visit ORCID Profile
+                    </a>
                 </div>
 
                 <div class="h-project-card">

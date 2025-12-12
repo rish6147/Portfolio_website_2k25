@@ -74,6 +74,7 @@
         /* --- Header --- */
         .header-section {
             padding: 140px 20px 60px 20px; text-align: center;
+            display: flex; flex-direction: column; align-items: center; /* Center content */
         }
         .header-title {
             font-family: var(--font-head); font-size: 3.5rem; font-weight: 800; margin-bottom: 15px;
@@ -81,6 +82,19 @@
             -webkit-text-fill-color: transparent;
         }
         .header-desc { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+        /* ORCID Button Style */
+        .btn-orcid {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 30px; background: transparent;
+            border: 1px solid #A6CE39; color: #A6CE39; border-radius: 50px;
+            cursor: pointer; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: all 0.3s;
+            margin-top: 25px; 
+        }
+        .btn-orcid:hover {
+            background: rgba(166, 206, 57, 0.1); color: #fff;
+            transform: translateY(-3px); box-shadow: 0 10px 30px rgba(166, 206, 57, 0.2);
+        }
 
         /* --- Filters --- */
         .filter-container {
@@ -261,6 +275,10 @@
     <section class="header-section">
         <h1 class="header-title">Research Archive</h1>
         <p class="header-desc">Academic contributions, publications, and technical reports in AI & Computer Vision.</p>
+        
+        <a href="https://orcid.org/0009-0007-3663-5525" target="_blank" class="btn-orcid">
+            <i class="fab fa-orcid"></i> Visit ORCID Profile
+        </a>
     </section>
 
     <div class="filter-container">
