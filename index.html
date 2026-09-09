@@ -527,6 +527,431 @@
     box-shadow: 0 10px 20px rgba(166, 206, 57, 0.3);
 }
 
+/* =========================================================
+EDUCATION SECTION
+========================================================= */
+
+.education-section {
+position: relative;
+padding: 120px 0;
+background:
+radial-gradient(
+circle at 15% 45%,
+rgba(124, 140, 255, 0.055),
+transparent 30%
+);
+overflow: hidden;
+}
+
+.education-section::before {
+content: "";
+position: absolute;
+width: 500px;
+height: 500px;
+left: -250px;
+top: 30%;
+border-radius: 50%;
+background: rgba(124, 140, 255, 0.04);
+filter: blur(120px);
+pointer-events: none;
+}
+
+/* ---------- HEADER ---------- */
+
+.education-header {
+max-width: 720px;
+margin-bottom: 70px;
+}
+
+.education-header h2 {
+margin-top: 12px;
+font-size: clamp(3rem, 6vw, 5rem);
+line-height: 0.98;
+letter-spacing: -0.065em;
+}
+
+.education-header h2 span {
+color: transparent;
+background: linear-gradient(
+100deg,
+#8c98ff,
+#bba8ff
+);
+-webkit-background-clip: text;
+background-clip: text;
+}
+
+.education-header p {
+margin-top: 22px;
+max-width: 580px;
+color: #9298a7;
+}
+
+/* ---------- TIMELINE ---------- */
+
+.education-timeline {
+position: relative;
+max-width: 1050px;
+margin: 0 auto;
+padding-left: 95px;
+}
+
+.education-timeline::before {
+content: "";
+position: absolute;
+left: 32px;
+top: 15px;
+bottom: 15px;
+width: 1px;
+background: linear-gradient(
+to bottom,
+transparent,
+rgba(124, 140, 255, 0.5) 10%,
+rgba(255, 255, 255, 0.10) 90%,
+transparent
+);
+}
+
+/* ---------- CARD ---------- */
+
+.education-card {
+position: relative;
+display: grid;
+grid-template-columns: 130px 1fr;
+gap: 35px;
+margin-bottom: 28px;
+padding: 30px;
+
+
+border: 1px solid rgba(255, 255, 255, 0.08);
+border-radius: 22px;
+
+background:
+    linear-gradient(
+        145deg,
+        rgba(18, 20, 28, 0.90),
+        rgba(9, 10, 14, 0.90)
+    );
+
+box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.22);
+
+transition:
+    transform 0.45s cubic-bezier(.22,1,.36,1),
+    border-color 0.3s ease,
+    box-shadow 0.45s ease;
+
+
+}
+
+.education-card:hover {
+transform: translateX(6px);
+
+
+border-color: rgba(124, 140, 255, 0.35);
+
+box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.40),
+    0 0 50px rgba(124, 140, 255, 0.05);
+
+
+}
+
+/* ---------- NUMBER MARKER ---------- */
+
+.education-marker {
+position: absolute;
+left: -95px;
+top: 27px;
+
+
+width: 65px;
+height: 65px;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+border: 1px solid rgba(124, 140, 255, 0.30);
+border-radius: 16px;
+
+background: #08090d;
+
+box-shadow:
+    0 0 0 6px #050507,
+    0 0 30px rgba(124, 140, 255, 0.08);
+
+z-index: 2;
+
+
+}
+
+.education-marker span {
+color: #9ca6ff;
+font-size: 0.72rem;
+font-weight: 700;
+letter-spacing: 0.12em;
+}
+
+/* ---------- YEAR ---------- */
+
+.education-year {
+align-self: start;
+
+
+padding-top: 5px;
+
+color: #727887;
+font-size: 0.68rem;
+font-weight: 600;
+letter-spacing: 0.10em;
+line-height: 1.6;
+
+
+}
+
+/* ---------- CONTENT ---------- */
+
+.education-content {
+min-width: 0;
+}
+
+.education-top {
+display: flex;
+align-items: flex-start;
+justify-content: space-between;
+gap: 30px;
+}
+
+.education-type {
+display: inline-block;
+margin-bottom: 10px;
+
+
+color: #8f9aff;
+font-size: 0.62rem;
+font-weight: 700;
+letter-spacing: 0.13em;
+
+
+}
+
+.education-content h3 {
+margin: 0;
+
+
+color: #f5f6fa;
+font-size: 1.45rem;
+font-weight: 650;
+line-height: 1.25;
+letter-spacing: -0.035em;
+
+
+}
+
+.education-content h3 span {
+color: #a0a5b2;
+font-weight: 500;
+}
+
+.education-institution {
+margin-top: 7px;
+
+
+color: #858b99;
+font-size: 0.86rem;
+
+
+}
+
+/* ---------- SCORE ---------- */
+
+.education-score {
+flex-shrink: 0;
+
+
+min-width: 82px;
+padding: 11px 14px;
+
+text-align: center;
+
+border: 1px solid rgba(255, 255, 255, 0.08);
+border-radius: 12px;
+
+background: rgba(255, 255, 255, 0.025);
+
+
+}
+
+.education-score strong {
+display: block;
+
+
+color: #f5f6fa;
+font-size: 1.15rem;
+line-height: 1.1;
+letter-spacing: -0.04em;
+
+
+}
+
+.education-score span {
+display: block;
+margin-top: 4px;
+
+
+color: #707685;
+font-size: 0.58rem;
+text-transform: uppercase;
+letter-spacing: 0.10em;
+
+
+}
+
+/* ---------- DESCRIPTION ---------- */
+
+.education-description {
+max-width: 720px;
+margin-top: 20px;
+
+
+color: #8f95a3;
+font-size: 0.88rem;
+line-height: 1.75;
+
+
+}
+
+/* ---------- TAGS ---------- */
+
+.education-tags {
+display: flex;
+flex-wrap: wrap;
+gap: 7px;
+
+
+margin-top: 20px;
+
+}
+
+.education-tags span {
+padding: 5px 9px;
+
+border: 1px solid rgba(124, 140, 255, 0.13);
+border-radius: 8px;
+
+background: rgba(124, 140, 255, 0.045);
+
+color: #9ba3b4;
+font-size: 0.62rem;
+letter-spacing: 0.03em;
+
+}
+
+/* =========================================================
+RESPONSIVE
+========================================================= */
+
+@media (max-width: 800px) {
+
+.education-section {
+    padding: 85px 0;
+}
+
+.education-header {
+    margin-bottom: 45px;
+}
+
+.education-timeline {
+    padding-left: 0;
+}
+
+.education-timeline::before {
+    display: none;
+}
+
+.education-card {
+    display: block;
+    padding: 25px;
+}
+
+.education-marker {
+    position: relative;
+    left: auto;
+    top: auto;
+
+    width: 45px;
+    height: 45px;
+
+    margin-bottom: 22px;
+
+    border-radius: 12px;
+
+    box-shadow: none;
+}
+
+.education-year {
+    margin-bottom: 14px;
+}
+
+.education-top {
+    gap: 15px;
+}
+
+.education-content h3 {
+    font-size: 1.2rem;
+}
+
+
+}
+
+@media (max-width: 520px) {
+
+
+.education-section {
+    padding: 70px 0;
+}
+
+.education-header h2 {
+    font-size: 2.8rem;
+}
+
+.education-card {
+    padding: 21px;
+    border-radius: 18px;
+}
+
+.education-top {
+    display: block;
+}
+
+.education-score {
+    display: inline-block;
+    margin-top: 18px;
+}
+
+.education-description {
+    font-size: 0.83rem;
+}
+
+
+}
+
+/* ---------- ACCESSIBILITY ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+.education-card {
+    transition: none;
+}
+
+.education-card:hover {
+    transform: none;
+}
+
+}
+
+
 /* Mobile Responsive Tweak: Button ko center karne ke liye */
 @media (max-width: 900px) {
     .btn-orcid {
@@ -827,6 +1252,167 @@
             </div>
         </div>
     </section>
+
+    <!-- =========================
+     EDUCATION SECTION
+     ========================= -->
+
+<section id="education" class="education-section">
+    <div class="container">
+
+    <div class="section-header education-header">
+        <span class="section-label">ACADEMIC JOURNEY</span>
+        <h2>Education &amp;<br><span>Qualifications.</span></h2>
+        <p>A timeline of my academic background and technical foundation.</p>
+    </div>
+
+    <div class="education-timeline">
+
+        <!-- ===== EDUCATION ITEM 01 ===== -->
+        <article class="education-card">
+
+            <div class="education-marker">
+                <span>01</span>
+            </div>
+
+            <div class="education-year">
+                2021 — 2025
+            </div>
+
+            <div class="education-content">
+
+                <div class="education-top">
+                    <div>
+                        <span class="education-type">UNDERGRADUATE DEGREE</span>
+
+                        <h3>
+                            Bachelor of Technology
+                            <span>in Computer Science &amp; Engineering</span>
+                        </h3>
+
+                        <p class="education-institution">
+                            Presidency University, Bengaluru
+                        </p>
+                    </div>
+
+                    <div class="education-score">
+                        <strong>7.41</strong>
+                        <span>CGPA</span>
+                    </div>
+                </div>
+
+                <p class="education-description">
+                    Built a strong foundation in computer science with a
+                    focus on Artificial Intelligence, Machine Learning,
+                    Computer Vision, IoT and software engineering.
+                </p>
+
+                <div class="education-tags">
+                    <span>Artificial Intelligence</span>
+                    <span>Machine Learning</span>
+                    <span>Computer Vision</span>
+                    <span>IoT</span>
+                    <span>Data Structures</span>
+                    <span>DBMS</span>
+                </div>
+
+            </div>
+        </article>
+
+
+        <!-- ===== EDUCATION ITEM 02 ===== -->
+        <article class="education-card">
+
+            <div class="education-marker">
+                <span>02</span>
+            </div>
+
+            <div class="education-year">
+                2019 — 2021
+            </div>
+
+            <div class="education-content">
+
+                <div class="education-top">
+                    <div>
+                        <span class="education-type">HIGHER SECONDARY</span>
+
+                        <h3>
+                            Higher Secondary Education
+                        </h3>
+
+                        <p class="education-institution">
+                            Your School / College Name
+                        </p>
+                    </div>
+
+                    <div class="education-score">
+                        <strong>XX%</strong>
+                        <span>Score</span>
+                    </div>
+                </div>
+
+                <p class="education-description">
+                    Add a short description of your higher secondary
+                    education, academic focus or notable achievements here.
+                </p>
+
+                <div class="education-tags">
+                    <span>Physics</span>
+                    <span>Mathematics</span>
+                    <span>Computer Science</span>
+                </div>
+
+            </div>
+        </article>
+
+
+        <!-- ===== EDUCATION ITEM 03 ===== -->
+        <article class="education-card">
+
+            <div class="education-marker">
+                <span>03</span>
+            </div>
+
+            <div class="education-year">
+                2017 — 2019
+            </div>
+
+            <div class="education-content">
+
+                <div class="education-top">
+                    <div>
+                        <span class="education-type">SECONDARY EDUCATION</span>
+
+                        <h3>
+                            Secondary School Education
+                        </h3>
+
+                        <p class="education-institution">
+                            Your School Name
+                        </p>
+                    </div>
+
+                    <div class="education-score">
+                        <strong>XX%</strong>
+                        <span>Score</span>
+                    </div>
+                </div>
+
+                <p class="education-description">
+                    Add any relevant academic details, achievements or
+                    extracurricular activities here.
+                </p>
+
+            </div>
+        </article>
+
+    </div>
+
+</div>
+
+</section>
+
 
     <section id="work" class="container section stack-section">
         <div class="section-header">
